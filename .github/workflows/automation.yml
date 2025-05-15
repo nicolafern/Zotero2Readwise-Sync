@@ -1,21 +1,34 @@
-name: Zotero to Readwise Automation
+name: Zotero to Readwise Automation Mod nca
+
 on:
   push:
     branches:
       - master
   schedule:
-    - cron: "47 11 * * *"
+    - cron: "0 3 * * 1,5" # Runs at 03:00 AM (UTC) every day (Check https://crontab.guru/)
+
 jobs:
   zotero-to-readwise-automation:
     runs-on: ubuntu-latest
     steps:
       - name: 🍽️ Checkout the repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      - name: 💿 Install latest packages
-        run: pip install zotero2readwise pyzotero
+      - name: 🐍 Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
 
+      - name: 💿 Install your modified Zotero2Readwise package and pyzotero 1.6.9
+        run: |
+          pip install pyzotero==1.6.9
+          pip install git+https://github.com/ncarboni/Zotero2ReadwiseMod.git
+        
 
-
+      - name: 📥 Download the Python script needed for automation
+        run:  curl https://raw.githubusercontent.com/ncarboni/Zotero2ReadwiseMod/master/zotero2readwise/run.py -o run.py
+      
       - name: 🚀 Run Automation
-        run: python -m zotero2readwise.run ${{ secrets.READWISE_TOKEN }} ${{ secrets.ZOTERO_KEY }} ${{ secrets.ZOTERO_ID }}  # Use built-in script
+        run: python run.py ${{ secrets.READWISE_TOKEN }} ${{ secrets.ZOTERO_KEY }} ${{ secrets.ZOTERO_ID }}
