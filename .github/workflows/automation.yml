@@ -18,7 +18,11 @@ jobs:
           python-version: '3.10'
 
       - name: 💿 Install Zotero2Readwise Python package
-        run: pip install pyzotero==1.4.15 zotero2readwise==0.4.5  # Tested working
+         run: |
+          pip install --no-deps pyzotero==1.4.15
+          pip install feedparser==6.0.11
+          pip install zotero2readwise==0.4.5
+
 
       - name: 🚀 Run Automation
         run: python -m zotero2readwise.run ${{ secrets.READWISE_TOKEN }} ${{ secrets.ZOTERO_KEY }} ${{ secrets.ZOTERO_ID }}  # Use built-in script
