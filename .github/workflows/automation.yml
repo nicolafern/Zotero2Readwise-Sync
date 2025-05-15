@@ -12,16 +12,9 @@ jobs:
       - name: 🍽️ Checkout the repo
         uses: actions/checkout@v4
 
-      - name: 🐍 Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+      - name: 💿 Install latest packages
+        run: pip install zotero2readwise pyzotero
 
-      - name: 💿 Install Zotero2Readwise Python package
-        run: |
-          pip install --no-deps pyzotero==1.4.15
-          pip install feedparser==6.0.11
-          pip install zotero2readwise==0.4.5
 
 
       - name: 🚀 Run Automation
