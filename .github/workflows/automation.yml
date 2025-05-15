@@ -18,7 +18,7 @@ jobs:
           python-version: '3.10'
 
       - name: 💿 Install Zotero2Readwise Python package
-         run: |
+        run: |
           pip install --no-deps pyzotero==1.4.15
           pip install feedparser==6.0.11
           pip install zotero2readwise==0.4.5
